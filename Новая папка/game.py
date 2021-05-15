@@ -8,16 +8,45 @@ class Alfa(sprite.Sprite):
         super().__init__()
         self.image = image.load(image_name)
         self.rect = Rect(w,h,y,x)
+        self.hface = "right"
+        self.speed = speed
     def reset(self):
         win.blit(self.image,(self.rect.x,self.rect.y))
 
-ball = Alfa(100,100,50,50,'pixil-frame-0 (2).png',0)
+
+
+
+class Ball(Alfa):
+    def update(self):
+
+
+        if self.hface == "right":
+            self.rect.x += self.speed
+            if self.rect.x > w:
+
+                self.hface="left"
+
+        
+        else:
+            if self.hface == "left":
+                self.rect.x -= self.speed
+                if self.rect.x < 0:
+
+                    self.hface="right" 
+
+        self.reset()
+        
+
+ball = Ball(100,100,100,100,'pixil-frame-0 (2).png',1) 
+
+    
+
 while True:
     
     for e in event.get():
         if e.type == 12:
             exit()
     win.fill((229,190,1))
-    ball.reset()
+    ball.update()
     display.update()
 
